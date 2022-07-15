@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DiscardFruitButton : MonoBehaviour
+public class DiscardFruitButton : MonoBehaviour //UI button for discarding fruits
 {
     PlayerInventory pInventory;
     Button thisButton;
 
     public InventoryContainer inventoryContainer;
 
-    // Start is called before the first frame update
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -18,7 +17,7 @@ public class DiscardFruitButton : MonoBehaviour
 
         thisButton = GetComponent<Button>();
         thisButton.onClick.AddListener(DiscardButtonClick);
-        
+
     }
 
     void DiscardButtonClick()

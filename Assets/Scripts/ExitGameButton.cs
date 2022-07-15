@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ExitGameButton : MonoBehaviour
+public class ExitGameButton : MonoBehaviour //button handling quit/return to main menu
 {
     public void ExitGameClicked()
     {

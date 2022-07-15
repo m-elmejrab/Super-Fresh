@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoBehaviour //Singleton class responsible for playing music/sfx
 {
 
     public static SoundManager instance;
     private AudioSource audioSource;
-
     public AudioClip backgroundMusic;
     public AudioClip collectFruit;
     public AudioClip discardFruit;
@@ -15,7 +14,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip levelFinished;
     public AudioClip clickSound;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         if (instance == null)

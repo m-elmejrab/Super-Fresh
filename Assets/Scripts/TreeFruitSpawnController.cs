@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class TreeFruitSpawnController : MonoBehaviour
+public class TreeFruitSpawnController : MonoBehaviour //controls how much fruits do trees spawn and when
 {
-    public GameObject fruitPrefab;
-    public float timeUntilFruitFall = 6f;
+    [SerializeField] GameObject fruitPrefab;
+    [SerializeField] float timeUntilFruitFall = 6f;
 
     private float timeSinceLastFruitFall = 0f;
     private List<Transform> spawnPoints;
     private List<GameObject> hangingFruits;
     private Vector3 lastFruitPosition;
 
-    // Start is called before the first frame update
+
     void Start()
     {
+        //Initialize lists and fill in their data
         spawnPoints = new List<Transform>();
         hangingFruits = new List<GameObject>();
 
@@ -29,19 +30,16 @@ public class TreeFruitSpawnController : MonoBehaviour
 
         foreach (Transform p in spawnPoints)
         {
-           
-
             CreateFruit(p.position);
         }
 
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         timeSinceLastFruitFall += Time.fixedDeltaTime;
 
-        if(timeSinceLastFruitFall >= timeUntilFruitFall)
+        if (timeSinceLastFruitFall >= timeUntilFruitFall)
         {
             timeSinceLastFruitFall = 0f;
             timeUntilFruitFall += 3f;
@@ -52,6 +50,9 @@ public class TreeFruitSpawnController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Drops a fruit when enough time has passed
+    /// </summary>
     private void DropFruit(int fruitIndex)
     {
         lastFruitPosition = hangingFruits[fruitIndex].transform.position;
@@ -60,11 +61,11 @@ public class TreeFruitSpawnController : MonoBehaviour
         Vector3 force = new Vector3(0, 0, randomForce);
         hangingFruits[fruitIndex].GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
         hangingFruits.RemoveAt(fruitIndex);
-
-        
-
     }
 
+    /// <summary>
+    /// Spawns fruit on tree
+    /// </summary>
     private void CreateFruit(Vector3 spawnPosition)
     {
         GameObject fruit = Instantiate(fruitPrefab, spawnPosition, fruitPrefab.transform.rotation);
@@ -85,6 +86,5 @@ public class TreeFruitSpawnController : MonoBehaviour
         }
 
         CreateFruit(lastFruitPosition);
-
     }
 }

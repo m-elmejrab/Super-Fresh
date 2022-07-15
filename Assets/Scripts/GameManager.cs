@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
-   
+
 
     GameObject player;
 
@@ -18,25 +18,25 @@ public class GameManager : MonoBehaviour
     private float acceptableCustomerDelay = 20f;
     private int score = 0;
 
-    public int noStarScore = 70;
-    public int oneStarScore = 75;
-    public int twoStarScore = 80;
-    public int threeStarScore = 90;
+    [SerializeField] int noStarScore = 70;
+    [SerializeField] int oneStarScore = 75;
+    [SerializeField] int twoStarScore = 80;
+    [SerializeField] int threeStarScore = 90;
 
     float fadingTime;
 
 
-    // Start is called before the first frame update
     void Start()
     {
+        //Implement singleton behavior
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
 
-
+        //Get reference to player
         player = GameObject.FindGameObjectWithTag("Player");
-        
+
     }
 
     private void Update()
@@ -52,15 +52,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   
+
+    /// <summary>
+    /// Resets serving time, calculates score for serving the last customer
+    /// </summary>
     public void CustomerServed()
     {
         float timeSpentToServe = acceptableCustomerDelay - timeCustomerWasWaiting;
         if (timeSpentToServe < 0)
             timeSpentToServe = 0;
 
-        int scoreIncrease = 10 + ((int)timeSpentToServe );
-        score = score +  scoreIncrease;
+        int scoreIncrease = 10 + ((int)timeSpentToServe);
+        score = score + scoreIncrease;
 
         timeCustomerWasWaiting = 0f;
         UIManager.instance.IncrementScore(score);
@@ -69,6 +72,9 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Level completed, handle UI and player accordingly
+    /// </summary>
     public void GameWon()
     {
         levelCompleted = true;
@@ -78,7 +84,7 @@ public class GameManager : MonoBehaviour
         player.GetComponent<Animator>().SetFloat("Speed", 0);
 
         SoundManager.instance.PlayLevelComplete();
-       
+
         int starsWon = 0;
 
         if (score >= oneStarScore && score < twoStarScore)
@@ -92,6 +98,9 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Load scene with a specific index
+    /// </summary>
     public void LoadLevel(int index)
     {
         if (Time.timeScale != 1)
@@ -99,6 +108,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ChangeLevel(index));
     }
 
+    /// <summary>
+    /// Animates transitions between scenes
+    /// </summary>
     IEnumerator ChangeLevel(int levelIndex)
     {
         fadingTime = GetComponent<FaderScript>().BeginFade(1);
@@ -106,22 +118,23 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
     }
 
+
     public void PauseLevel()
     {
-        if(!levelCompleted)
+        if (!levelCompleted)
         {
             Time.timeScale = 0;
             UIManager.instance.PauseGame();
             levelPaused = true;
         }
-        
+
     }
 
     public void ResumeLevel()
     {
-        if(!levelCompleted)
+        if (!levelCompleted)
         {
-            Time.timeScale =1;
+            Time.timeScale = 1;
             UIManager.instance.ResumeGame();
             levelPaused = false;
 

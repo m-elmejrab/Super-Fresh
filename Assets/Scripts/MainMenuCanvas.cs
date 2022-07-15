@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuCanvas : MonoBehaviour
+public class MainMenuCanvas : MonoBehaviour //Contains/displays the help info when on main menu
 {
-    public GameObject helpPanel;
+    [SerializeField] GameObject helpPanel;
 
     private void Start()
     {

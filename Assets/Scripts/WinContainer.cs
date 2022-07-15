@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WinContainer : MonoBehaviour
+public class WinContainer : MonoBehaviour //Displays win message and stars/score when level is finished
 {
+    [SerializeField] Text winScoreText;
+    [SerializeField] Image firstStar;
+    [SerializeField] Image secondStar;
+    [SerializeField] Image thirdStar;
+    [SerializeField] Sprite emptyStar;
+    [SerializeField] Sprite fullStar;
 
-    public Text winScoreText;
-    public Image firstStar;
-    public Image secondStar;
-    public Image thirdStar;
-    public Sprite emptyStar;
-    public Sprite fullStar;
-
-
+    /// <summary>
+    /// Displays number of stars based on score achieved
+    /// </summary>
     public void ShowWinWindow(int score, int numOfStars) //0 = no stars, 1 = 1 star ...etc
     {
         winScoreText.text = "Score: " + score;

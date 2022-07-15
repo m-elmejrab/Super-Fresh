@@ -4,24 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour //Singleton class responsible for handling UI elements
 {
     public static UIManager instance;
 
-    public GameObject winContainer;
-    public GameObject leftSideContainer;
-    public GameObject rightSideContainer;
-    public GameObject pauseMenuContainer;
+    [SerializeField] GameObject winContainer;
+    [SerializeField] GameObject leftSideContainer;
+    [SerializeField] GameObject rightSideContainer;
+    [SerializeField] GameObject pauseMenuContainer;
 
-    public Text scoreText;
+    [SerializeField] Text scoreText;
 
-    public Sprite pear;
-    public Sprite apple;
-    public Sprite banana;
-    public Sprite lemon;
+    [SerializeField] Sprite pear;
+    [SerializeField] Sprite apple;
+    [SerializeField] Sprite banana;
+    [SerializeField] Sprite lemon;
 
-    public GameObject inventoryContainer;
-    public GameObject requestContainer;
+    [SerializeField] GameObject inventoryContainer;
+    [SerializeField] GameObject requestContainer;
 
     private void Start()
     {
@@ -35,6 +35,9 @@ public class UIManager : MonoBehaviour
         scoreText.text = "Score: 0";
     }
 
+    /// <summary>
+    /// Clears and updates player inventory
+    /// </summary>
     public void UpdatePlayerInventoryUI(List<Fruit> collectedFruits)
     {
         foreach (Transform t in inventoryContainer.GetComponentInChildren<Transform>())
@@ -42,11 +45,9 @@ public class UIManager : MonoBehaviour
             Destroy(t.gameObject);
         }
 
-
-        int i = 0;
+        int i = 0; //used to place the fruit in correct place
         foreach (Fruit f in collectedFruits)
         {
-
             switch (f.GetFruitType())
             {
                 case Fruit.FruitType.Apple:
@@ -70,12 +71,12 @@ public class UIManager : MonoBehaviour
             }
 
             i++;
-
-
-
         }
     }
 
+    /// <summary>
+    /// Creates the fruit icon in the inventory UI container
+    /// </summary>
     private void CreateFruitIcon(Sprite sprite, Vector3 localPos)
     {
         GameObject o = new GameObject("FruitContainer", typeof(RectTransform));
@@ -89,13 +90,15 @@ public class UIManager : MonoBehaviour
         c.size = size;
     }
 
+    /// <summary>
+    /// Displays customer request on UI
+    /// </summary>
     public void UpdateCustomerRequestText(List<Fruit> reqest)
     {
         foreach (Transform t in requestContainer.GetComponentInChildren<Transform>())
         {
             Destroy(t.gameObject);
         }
-
 
         int i = 0;
         foreach (Fruit f in reqest)
@@ -104,35 +107,19 @@ public class UIManager : MonoBehaviour
             switch (f.GetFruitType())
             {
                 case Fruit.FruitType.Apple:
-                    GameObject o = new GameObject();
-                    SpriteRenderer renderer = o.AddComponent<SpriteRenderer>();
-                    renderer.sprite = apple;
-                    o.transform.parent = requestContainer.transform;
-                    o.transform.localPosition = new Vector3(100, 0, 0) * i;
+                    CreateRequestedFruitIcon(apple, new Vector3(100, 0, 0) * i);
                     break;
 
                 case Fruit.FruitType.Pear:
-                    GameObject o1 = new GameObject();
-                    SpriteRenderer renderer1 = o1.AddComponent<SpriteRenderer>();
-                    renderer1.sprite = pear;
-                    o1.transform.parent = requestContainer.transform;
-                    o1.transform.localPosition = new Vector3(100, 0, 0) * i;
+                    CreateRequestedFruitIcon(pear, new Vector3(100, 0, 0) * i);
                     break;
 
                 case Fruit.FruitType.Lemon:
-                    GameObject o2 = new GameObject();
-                    SpriteRenderer renderer2 = o2.AddComponent<SpriteRenderer>();
-                    renderer2.sprite = lemon;
-                    o2.transform.parent = requestContainer.transform;
-                    o2.transform.localPosition = new Vector3(100, 0, 0) * i;
+                    CreateRequestedFruitIcon(lemon, new Vector3(100, 0, 0) * i);
                     break;
 
                 case Fruit.FruitType.Banana:
-                    GameObject o3 = new GameObject();
-                    SpriteRenderer renderer3 = o3.AddComponent<SpriteRenderer>();
-                    renderer3.sprite = banana;
-                    o3.transform.parent = requestContainer.transform;
-                    o3.transform.localPosition = new Vector3(100, 0, 0) * i;
+                    CreateRequestedFruitIcon(banana, new Vector3(100, 0, 0) * i);
                     break;
 
                 default:
@@ -144,20 +131,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates customer request fruit icon
+    /// </summary>
+    private void CreateRequestedFruitIcon(Sprite fruitSprite, Vector3 iconPosition)
+    {
+        GameObject obj = new GameObject();
+        SpriteRenderer renderer = obj.AddComponent<SpriteRenderer>();
+        renderer.sprite = fruitSprite;
+        obj.transform.parent = requestContainer.transform;
+        obj.transform.localPosition = iconPosition;
+    }
+
+    /// <summary>
+    /// Displays new score
+    /// </summary>
     public void IncrementScore(int newScore)
     {
         scoreText.text = "Score: " + newScore;
-
     }
 
+    /// <summary>
+    /// Displays level end message and final score/stars
+    /// </summary>
     public void GameEnded(int finalScore, int starsWon)
     {
         leftSideContainer.SetActive(false);
         rightSideContainer.SetActive(false);
         winContainer.SetActive(true);
-
         winContainer.GetComponent<WinContainer>().ShowWinWindow(finalScore, starsWon);
-
     }
 
     public void PauseGame()
@@ -165,7 +167,6 @@ public class UIManager : MonoBehaviour
         leftSideContainer.SetActive(false);
         rightSideContainer.SetActive(false);
         pauseMenuContainer.SetActive(true);
-
     }
 
     public void ResumeGame()

@@ -1,4 +1,4 @@
-﻿public class Fruit 
+﻿public class Fruit //Base fruit class
 {
     FruitType type;
 

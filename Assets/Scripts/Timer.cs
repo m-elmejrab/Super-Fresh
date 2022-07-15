@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviour //Displays time on UI
 {
 
     Text timerText;
@@ -23,7 +23,6 @@ public class Timer : MonoBehaviour
         {
             timePassed += Time.deltaTime;
             timerText.text = "Time:  " + string.Format("{0}:{1:00}", (int)timePassed / 60, (int)timePassed % 60);
-
         }
 
     }

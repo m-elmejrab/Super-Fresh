@@ -5,58 +5,57 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-
-
     public int maxCapacity = 4;
 
     private List<Fruit> collectedFruits;
 
-    // Start is called before the first frame update
     void Start()
     {
         collectedFruits = new List<Fruit>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter(Collision collision) //when colliding with a fruit, handle the interaction
     {
-        if (collectedFruits.Count < maxCapacity)
+        if (collectedFruits.Count < maxCapacity) //checks if inventory has space
         {
             if (collision.transform.CompareTag("Apple"))
             {
-                collectedFruits.Add(new Fruit(Fruit.FruitType.Apple));
-                Destroy(collision.gameObject);
-                SoundManager.instance.PlayCollectFruit();
-
+                CollectFruit(collision.gameObject, Fruit.FruitType.Apple);
             }
 
             if (collision.transform.CompareTag("Banana"))
             {
-                collectedFruits.Add(new Fruit(Fruit.FruitType.Banana));
-                Destroy(collision.gameObject);
-                SoundManager.instance.PlayCollectFruit();
-
+                CollectFruit(collision.gameObject, Fruit.FruitType.Banana);
             }
 
             if (collision.transform.CompareTag("Lemon"))
             {
-                collectedFruits.Add(new Fruit(Fruit.FruitType.Lemon));
-                Destroy(collision.gameObject);
-                SoundManager.instance.PlayCollectFruit();
-
+                CollectFruit(collision.gameObject, Fruit.FruitType.Lemon);
             }
 
             if (collision.transform.CompareTag("Pear"))
             {
-                collectedFruits.Add(new Fruit(Fruit.FruitType.Pear));
-                Destroy(collision.gameObject);
-                SoundManager.instance.PlayCollectFruit();
-
+                CollectFruit(collision.gameObject, Fruit.FruitType.Pear);
             }
 
             UIManager.instance.UpdatePlayerInventoryUI(collectedFruits);
         }
     }
 
+    /// <summary>
+    /// Adds collected fruit to inventory
+    /// </summary>
+    private void CollectFruit(GameObject fruitObject, Fruit.FruitType type)
+    {
+        collectedFruits.Add(new Fruit(type));
+        Destroy(fruitObject);
+        SoundManager.instance.PlayCollectFruit();
+    }
+
+    /// <summary>
+    /// Checks if the request can be finalized
+    /// </summary>
     public bool InventoryHasAllRequestItems(List<Fruit> request)
     {
         List<Fruit> tempInventory = new List<Fruit>(collectedFruits);
@@ -77,6 +76,9 @@ public class PlayerInventory : MonoBehaviour
         return (fruitFound.Count == request.Count);
     }
 
+    /// <summary>
+    /// Clears served fruits from inventory
+    /// </summary>
     public void FinishRequest(List<Fruit> request)
     {
         foreach (Fruit f in request)
@@ -93,6 +95,9 @@ public class PlayerInventory : MonoBehaviour
         UIManager.instance.UpdatePlayerInventoryUI(collectedFruits);
     }
 
+    /// <summary>
+    /// Clears the whole inventory
+    /// </summary>
     public void ClearInventory(List<string> fruitsToRemove)
     {
         foreach (string f in fruitsToRemove)
@@ -108,7 +113,7 @@ public class PlayerInventory : MonoBehaviour
         }
 
         UIManager.instance.UpdatePlayerInventoryUI(collectedFruits);
-        if(fruitsToRemove.Count>0)
+        if (fruitsToRemove.Count > 0)
             SoundManager.instance.PlayDiscardFruit();
     }
 
