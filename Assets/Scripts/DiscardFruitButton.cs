@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class DiscardFruitButton : MonoBehaviour //UI button for discarding fruits
 {
-    PlayerInventory pInventory;
+    PlayerInventory playerInventory;
     Button thisButton;
 
     public InventoryContainer inventoryContainer;
@@ -13,15 +11,13 @@ public class DiscardFruitButton : MonoBehaviour //UI button for discarding fruit
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        pInventory = player.GetComponent<PlayerInventory>();
-
+        playerInventory = player.GetComponent<PlayerInventory>();
         thisButton = GetComponent<Button>();
         thisButton.onClick.AddListener(DiscardButtonClick);
-
     }
 
     void DiscardButtonClick()
     {
-        pInventory.ClearInventory(inventoryContainer.GetSelectedFruits());
+        playerInventory.ClearInventory(inventoryContainer.GetSelectedFruits());
     }
 }

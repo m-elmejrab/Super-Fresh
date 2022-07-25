@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour //Singleton class responsible for playing music/sfx
 {
-
     public static SoundManager instance;
     private AudioSource audioSource;
     public AudioClip backgroundMusic;
@@ -21,7 +18,6 @@ public class SoundManager : MonoBehaviour //Singleton class responsible for play
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
 
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = backgroundMusic;

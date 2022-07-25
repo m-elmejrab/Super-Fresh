@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
     public int maxCapacity = 4;
-
     private List<Fruit> collectedFruits;
 
     void Start()
@@ -43,9 +40,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Adds collected fruit to inventory
-    /// </summary>
     private void CollectFruit(GameObject fruitObject, Fruit.FruitType type)
     {
         collectedFruits.Add(new Fruit(type));
@@ -53,9 +47,6 @@ public class PlayerInventory : MonoBehaviour
         SoundManager.instance.PlayCollectFruit();
     }
 
-    /// <summary>
-    /// Checks if the request can be finalized
-    /// </summary>
     public bool InventoryHasAllRequestItems(List<Fruit> request)
     {
         List<Fruit> tempInventory = new List<Fruit>(collectedFruits);
@@ -76,9 +67,6 @@ public class PlayerInventory : MonoBehaviour
         return (fruitFound.Count == request.Count);
     }
 
-    /// <summary>
-    /// Clears served fruits from inventory
-    /// </summary>
     public void FinishRequest(List<Fruit> request)
     {
         foreach (Fruit f in request)
@@ -95,9 +83,6 @@ public class PlayerInventory : MonoBehaviour
         UIManager.instance.UpdatePlayerInventoryUI(collectedFruits);
     }
 
-    /// <summary>
-    /// Clears the whole inventory
-    /// </summary>
     public void ClearInventory(List<string> fruitsToRemove)
     {
         foreach (string f in fruitsToRemove)
@@ -116,5 +101,4 @@ public class PlayerInventory : MonoBehaviour
         if (fruitsToRemove.Count > 0)
             SoundManager.instance.PlayDiscardFruit();
     }
-
 }

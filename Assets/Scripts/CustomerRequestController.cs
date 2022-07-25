@@ -1,12 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEngine.UI;
-
 public class CustomerRequestController : MonoBehaviour //Creates and handles customer requests
 {
-
     [SerializeField] int maxNumOfFruitsRequest = 2;
     [SerializeField] List<Transform> customers;
     private List<Fruit> currentRequest;
@@ -25,7 +21,6 @@ public class CustomerRequestController : MonoBehaviour //Creates and handles cus
         }
 
         SetNextCustomerRequest();
-
     }
 
 
@@ -63,9 +58,6 @@ public class CustomerRequestController : MonoBehaviour //Creates and handles cus
 
     }
 
-    /// <summary>
-    /// Handles delivery when player arrives at the kiosk
-    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Player"))
@@ -93,16 +85,11 @@ public class CustomerRequestController : MonoBehaviour //Creates and handles cus
                     customers.RemoveAt(0);
                     Destroy(customerToRemove.gameObject, 2f);
                     GameManager.instance.CustomerServed();
-
                 }
-
             }
         }
     }
 
-    /// <summary>
-    /// animates the queue of customers moving towards the kiosk
-    /// </summary>
     private void UpdateCustomerPositions()
     {
         for (int i = 1; i < customers.Count; i++)
@@ -113,7 +100,6 @@ public class CustomerRequestController : MonoBehaviour //Creates and handles cus
 
     IEnumerator AnimateMove(float duration, int customerIndex)
     {
-
         Transform customerToMove = customers[customerIndex];
 
         float percent = 0;

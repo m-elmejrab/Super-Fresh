@@ -1,30 +1,22 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager instance;
-
-
-    GameObject player;
-
-    bool levelCompleted = false;
-    bool levelPaused = false;
-    private float timeCustomerWasWaiting = 0f;
-    private float acceptableCustomerDelay = 20f;
-    private int score = 0;
-
     [SerializeField] int noStarScore = 70;
     [SerializeField] int oneStarScore = 75;
     [SerializeField] int twoStarScore = 80;
     [SerializeField] int threeStarScore = 90;
 
+    GameObject player;
+    bool levelCompleted = false;
+    bool levelPaused = false;
+    private float timeCustomerWasWaiting = 0f;
+    private float acceptableCustomerDelay = 20f;
+    private int score = 0;
     float fadingTime;
-
 
     void Start()
     {
@@ -36,7 +28,6 @@ public class GameManager : MonoBehaviour
 
         //Get reference to player
         player = GameObject.FindGameObjectWithTag("Player");
-
     }
 
     private void Update()
@@ -52,10 +43,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// Resets serving time, calculates score for serving the last customer
-    /// </summary>
     public void CustomerServed()
     {
         float timeSpentToServe = acceptableCustomerDelay - timeCustomerWasWaiting;
@@ -68,13 +55,8 @@ public class GameManager : MonoBehaviour
         timeCustomerWasWaiting = 0f;
         UIManager.instance.IncrementScore(score);
         SoundManager.instance.PlayCustomerServed();
-
-
     }
 
-    /// <summary>
-    /// Level completed, handle UI and player accordingly
-    /// </summary>
     public void GameWon()
     {
         levelCompleted = true;
@@ -95,29 +77,21 @@ public class GameManager : MonoBehaviour
             starsWon = 3;
 
         UIManager.instance.GameEnded(score, starsWon);
-
     }
 
-    /// <summary>
-    /// Load scene with a specific index
-    /// </summary>
     public void LoadLevel(int index)
     {
         if (Time.timeScale != 1)
             Time.timeScale = 1;
-        StartCoroutine(ChangeLevel(index));
+        StartCoroutine(AnimateLevelTransition(index));
     }
 
-    /// <summary>
-    /// Animates transitions between scenes
-    /// </summary>
-    IEnumerator ChangeLevel(int levelIndex)
+    IEnumerator AnimateLevelTransition(int levelIndex)
     {
         fadingTime = GetComponent<FaderScript>().BeginFade(1);
         yield return new WaitForSeconds(fadingTime + 0.5f);
         SceneManager.LoadScene(levelIndex);
     }
-
 
     public void PauseLevel()
     {
@@ -127,7 +101,6 @@ public class GameManager : MonoBehaviour
             UIManager.instance.PauseGame();
             levelPaused = true;
         }
-
     }
 
     public void ResumeLevel()
@@ -137,9 +110,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
             UIManager.instance.ResumeGame();
             levelPaused = false;
-
         }
-
     }
-
 }

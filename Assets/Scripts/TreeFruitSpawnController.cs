@@ -7,19 +7,16 @@ public class TreeFruitSpawnController : MonoBehaviour //controls how much fruits
 {
     [SerializeField] GameObject fruitPrefab;
     [SerializeField] float timeUntilFruitFall = 6f;
-
     private float timeSinceLastFruitFall = 0f;
     private List<Transform> spawnPoints;
     private List<GameObject> hangingFruits;
     private Vector3 lastFruitPosition;
-
 
     void Start()
     {
         //Initialize lists and fill in their data
         spawnPoints = new List<Transform>();
         hangingFruits = new List<GameObject>();
-
         List<Transform> children = GetComponentsInChildren<Transform>().ToList<Transform>();
 
         foreach (Transform t in children)
@@ -46,13 +43,9 @@ public class TreeFruitSpawnController : MonoBehaviour //controls how much fruits
             int randomFruitIndex = Random.Range(0, (int)hangingFruits.Count - 1);
             DropFruit(randomFruitIndex);
             StartCoroutine(DelayFruitCreation(0.75f));
-
         }
     }
 
-    /// <summary>
-    /// Drops a fruit when enough time has passed
-    /// </summary>
     private void DropFruit(int fruitIndex)
     {
         lastFruitPosition = hangingFruits[fruitIndex].transform.position;
@@ -63,9 +56,6 @@ public class TreeFruitSpawnController : MonoBehaviour //controls how much fruits
         hangingFruits.RemoveAt(fruitIndex);
     }
 
-    /// <summary>
-    /// Spawns fruit on tree
-    /// </summary>
     private void CreateFruit(Vector3 spawnPosition)
     {
         GameObject fruit = Instantiate(fruitPrefab, spawnPosition, fruitPrefab.transform.rotation);

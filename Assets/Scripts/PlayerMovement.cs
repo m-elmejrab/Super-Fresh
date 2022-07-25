@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour //Handles player movement
 {
-
     private Animator playerAnimator;
     private float moveSpeed = 10f;
 

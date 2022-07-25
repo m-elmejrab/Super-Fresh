@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +11,11 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
     [SerializeField] GameObject leftSideContainer;
     [SerializeField] GameObject rightSideContainer;
     [SerializeField] GameObject pauseMenuContainer;
-
     [SerializeField] Text scoreText;
-
     [SerializeField] Sprite pear;
     [SerializeField] Sprite apple;
     [SerializeField] Sprite banana;
     [SerializeField] Sprite lemon;
-
     [SerializeField] GameObject inventoryContainer;
     [SerializeField] GameObject requestContainer;
 
@@ -35,9 +31,6 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
         scoreText.text = "Score: 0";
     }
 
-    /// <summary>
-    /// Clears and updates player inventory
-    /// </summary>
     public void UpdatePlayerInventoryUI(List<Fruit> collectedFruits)
     {
         foreach (Transform t in inventoryContainer.GetComponentInChildren<Transform>())
@@ -74,9 +67,6 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
         }
     }
 
-    /// <summary>
-    /// Creates the fruit icon in the inventory UI container
-    /// </summary>
     private void CreateFruitIcon(Sprite sprite, Vector3 localPos)
     {
         GameObject o = new GameObject("FruitContainer", typeof(RectTransform));
@@ -90,9 +80,6 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
         c.size = size;
     }
 
-    /// <summary>
-    /// Displays customer request on UI
-    /// </summary>
     public void UpdateCustomerRequestText(List<Fruit> reqest)
     {
         foreach (Transform t in requestContainer.GetComponentInChildren<Transform>())
@@ -103,7 +90,6 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
         int i = 0;
         foreach (Fruit f in reqest)
         {
-
             switch (f.GetFruitType())
             {
                 case Fruit.FruitType.Apple:
@@ -127,13 +113,9 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
             }
 
             i++;
-
         }
     }
 
-    /// <summary>
-    /// Creates customer request fruit icon
-    /// </summary>
     private void CreateRequestedFruitIcon(Sprite fruitSprite, Vector3 iconPosition)
     {
         GameObject obj = new GameObject();
@@ -143,17 +125,11 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
         obj.transform.localPosition = iconPosition;
     }
 
-    /// <summary>
-    /// Displays new score
-    /// </summary>
     public void IncrementScore(int newScore)
     {
         scoreText.text = "Score: " + newScore;
     }
 
-    /// <summary>
-    /// Displays level end message and final score/stars
-    /// </summary>
     public void GameEnded(int finalScore, int starsWon)
     {
         leftSideContainer.SetActive(false);
@@ -174,6 +150,5 @@ public class UIManager : MonoBehaviour //Singleton class responsible for handlin
         leftSideContainer.SetActive(true);
         rightSideContainer.SetActive(true);
         pauseMenuContainer.SetActive(false);
-
     }
 }

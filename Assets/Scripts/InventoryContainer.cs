@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,5 +20,4 @@ public class InventoryContainer : MonoBehaviour //Keeps record of selected fruit
         }
         return selectedFruits;
     }
-
 }

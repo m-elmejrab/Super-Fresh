@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +10,6 @@ public class WinContainer : MonoBehaviour //Displays win message and stars/score
     [SerializeField] Sprite emptyStar;
     [SerializeField] Sprite fullStar;
 
-    /// <summary>
-    /// Displays number of stars based on score achieved
-    /// </summary>
     public void ShowWinWindow(int score, int numOfStars) //0 = no stars, 1 = 1 star ...etc
     {
         winScoreText.text = "Score: " + score;
@@ -41,10 +36,8 @@ public class WinContainer : MonoBehaviour //Displays win message and stars/score
                 secondStar.sprite = fullStar;
                 thirdStar.sprite = fullStar;
                 break;
-
             default:
                 break;
         }
-
     }
 }
